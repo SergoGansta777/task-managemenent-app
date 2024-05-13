@@ -1,0 +1,26 @@
+meta {
+  name: add_task
+  type: http
+  seq: 6
+}
+
+post {
+  url: 127.0.0.1:8080/api/tasks
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Token eyJhbGciOiJIUzM4NCJ9.eyJ1c2VyX2lkIjoiMTNlOTNlZTgtMGZjYy0xMWVmLWIzZWYtNGYyYjRmOWYyOTU2IiwiZXhwIjoxNzE2MDYwMjY1fQ.-KkgvUeTV3TbwPAfE8Qdy8t_euFcWsntfDaMvk9u0imbgXClbhVaBRbI6ng5RPCT
+}
+
+body:json {
+  {
+    "task" : {
+      "title": "try second task",
+      "label": "First!",
+      "priority": "High",
+      "statusId": 3
+    }
+  }
+}

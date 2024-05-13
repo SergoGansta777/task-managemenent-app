@@ -1,0 +1,15 @@
+meta {
+  name: get_tasks
+  type: http
+  seq: 7
+}
+
+get {
+  url: 127.0.0.1:8080/api/tasks
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Token eyJhbGciOiJIUzM4NCJ9.eyJ1c2VyX2lkIjoiMTNlOTNlZTgtMGZjYy0xMWVmLWIzZWYtNGYyYjRmOWYyOTU2IiwiZXhwIjoxNzE2MDYwMjY1fQ.-KkgvUeTV3TbwPAfE8Qdy8t_euFcWsntfDaMvk9u0imbgXClbhVaBRbI6ng5RPCT
+}

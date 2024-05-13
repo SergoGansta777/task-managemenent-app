@@ -1,0 +1,21 @@
+meta {
+  name: add_user
+  type: http
+  seq: 3
+}
+
+post {
+  url: 127.0.0.1:8080/api/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "user" : {
+      "username": "first_user_test",
+    "email": "test@gmail.com",
+    "password": "test"
+    }
+  }
+}

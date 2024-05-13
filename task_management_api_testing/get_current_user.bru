@@ -1,0 +1,24 @@
+meta {
+  name: get_current_user
+  type: http
+  seq: 5
+}
+
+get {
+  url: 127.0.0.1:8080/api/user
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Token eyJhbGciOiJIUzM4NCJ9.eyJ1c2VyX2lkIjoiMTNlOTNlZTgtMGZjYy0xMWVmLWIzZWYtNGYyYjRmOWYyOTU2IiwiZXhwIjoxNzE2MTE2NTcwfQ.lMAUDePq5-inWJyTrawM7ps3pVum0hrGwv69RBziWM62Ut4RJ-jpciUA2zJfcaNf
+}
+
+body:json {
+  {
+    "user" : {
+    "email": "test@gmail.com",
+    "password": "test"
+    }
+  }
+}
