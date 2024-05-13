@@ -1,3 +1,4 @@
+import { priorities, statuses } from '@/data/initialTasks.ts'
 import { Cross2Icon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
 
@@ -5,7 +6,6 @@ import { Button } from '@/components/ui/button.tsx'
 import { Input } from '@/components/ui/input.tsx'
 import { DataTableViewOptions } from './data-table-view-options.tsx'
 
-import { priorities, statuses } from '../../../tasks/data.tsx'
 import { DataTableFacetedFilter } from './data-table-faceted-filter.tsx'
 
 interface DataTableToolbarProps<TData> {
@@ -16,6 +16,7 @@ export function DataTableToolbar<TData>({
                                           table
                                         }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
+  console.log(table.getColumn('statusId'))
   
   return (
     <div className='flex items-center justify-between'>
@@ -30,9 +31,9 @@ export function DataTableToolbar<TData>({
           className='h-8 w-[150px] lg:w-[250px]'
         />
         <div className='flex gap-x-2'>
-          {table.getColumn('status') && (
+          {table.getColumn('statusId') && (
             <DataTableFacetedFilter
-              column={table.getColumn('status')}
+              column={table.getColumn('statusId')}
               title='Status'
               options={statuses}
             />

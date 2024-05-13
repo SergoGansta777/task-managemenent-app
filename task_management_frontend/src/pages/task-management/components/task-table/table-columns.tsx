@@ -1,3 +1,5 @@
+import { labels, priorities, statuses } from '@/data/initialTasks.ts'
+import type { Task } from '@/types'
 import { ColumnDef } from '@tanstack/react-table'
 
 import { Badge } from '@/components/ui/badge.tsx'
@@ -5,10 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox.tsx'
 import { DataTableColumnHeader } from './data-table-column-header.tsx'
 import { DataTableRowActions } from './data-table-row-actions.tsx'
 
-import { labels, priorities, statuses } from '../../../tasks/data.tsx'
-import { Task } from '../schema'
-
-export const columns: ColumnDef<Task>[] = [
+export const tableColumns: ColumnDef<Task>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -35,6 +34,7 @@ export const columns: ColumnDef<Task>[] = [
   },
   {
     accessorKey: 'id',
+    meta: "Id",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Task' />
     ),
@@ -44,6 +44,7 @@ export const columns: ColumnDef<Task>[] = [
   },
   {
     accessorKey: 'title',
+    meta: "Title",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Title' />
     ),
@@ -62,13 +63,14 @@ export const columns: ColumnDef<Task>[] = [
     }
   },
   {
-    accessorKey: 'status',
+    accessorKey: 'statusId',
+    meta: "Status",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Status' />
     ),
     cell: ({ row }) => {
       const status = statuses.find(
-        (status) => status.value === row.getValue('status')
+        (status) => status.value === row.getValue('statusId')
       )
       
       if (!status) {
@@ -90,6 +92,7 @@ export const columns: ColumnDef<Task>[] = [
   },
   {
     accessorKey: 'priority',
+    meta: "Priority",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Priority' />
     ),

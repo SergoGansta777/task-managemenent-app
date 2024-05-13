@@ -26,7 +26,7 @@ interface KanbanBoardProps {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
-export function KanbanBoard({ tasks, setTasks }: KanbanBoardProps) {
+export function KanbanBoard({ tasks, setTasks}: KanbanBoardProps) {
   const [columns, setColumns] = useState<Column[]>(statuses)
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns])
   
@@ -35,8 +35,6 @@ export function KanbanBoard({ tasks, setTasks }: KanbanBoardProps) {
   const [activeTask, setActiveTask] = useState<Task | null>(null)
   
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor))
-  
-  console.log(columns)
   
   return (
     <DndContext

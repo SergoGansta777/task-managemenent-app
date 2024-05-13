@@ -51,8 +51,8 @@ const Index = () => {
           <TabsContent value='table'>
             <div className='h-auto w-full flex flex-col items-center gap-8'>
               <h2
-                className='"bg-gradient-to-b from-foreground to-transparent  leading-none text-transparent" scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl '>
-                Usable table of your tasks!
+                className='pb-4 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl '>
+                Sortable  table of your tasks!
               </h2>
             </div>
             <div className='px-2.5'>

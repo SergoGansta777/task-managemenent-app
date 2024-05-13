@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx'
+import { priorities } from '@/data/initialTasks.ts'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { cva } from 'class-variance-authority'
@@ -85,7 +86,7 @@ export function TaskCard({ task, isOverlay, deleteTask }: TaskCardProps) {
             {task.label}
           </Badge>
           <Badge variant={'default'} className='-translate-y-0.5 px-1 py-0.5'>
-            {task.priority}
+            {priorities.find(priority => priority.value === task.priority)?.label}
           </Badge>
         </div>
         <div className='z-50'>
