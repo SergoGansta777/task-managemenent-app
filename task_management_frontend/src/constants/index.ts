@@ -1,70 +1,71 @@
 import {
   ArrowDownIcon,
-  ArrowRightIcon, ArrowUpIcon,
+  ArrowRightIcon,
+  ArrowUpIcon,
   CheckCircledIcon,
   CircleIcon,
-  CrossCircledIcon, QuestionMarkCircledIcon,
-  StopwatchIcon
-} from '@radix-ui/react-icons'
+  CrossCircledIcon,
+  QuestionMarkCircledIcon,
+  StopwatchIcon,
+} from "@radix-ui/react-icons";
 
 export const labels = [
   {
-    id: 'bug',
-    label: 'Bug'
+    id: "bug",
+    label: "Bug",
   },
   {
-    id: 'feature',
-    label: 'Feature'
+    id: "feature",
+    label: "Feature",
   },
   {
-    id: 'documentation',
-    label: 'Documentation'
-  }
-]
+    id: "documentation",
+    label: "Documentation",
+  },
+];
 
 export const statuses = [
   {
-    id: 'todo',
-    label: 'Todo',
-    icon: CircleIcon
+    id: "todo",
+    label: "Todo",
+    icon: CircleIcon,
   },
   {
-    id: 'in progress',
-    label: 'In Progress',
-    icon: StopwatchIcon
+    id: "in progress",
+    label: "In Progress",
+    icon: StopwatchIcon,
   },
   {
-    id: 'done',
-    label: 'Done',
-    icon: CheckCircledIcon
+    id: "done",
+    label: "Done",
+    icon: CheckCircledIcon,
   },
   {
-    id: 'canceled',
-    label: 'Canceled',
-    icon: CrossCircledIcon
+    id: "canceled",
+    label: "Canceled",
+    icon: CrossCircledIcon,
   },
   {
-    id: 'backlog',
-    label: 'Backlog',
-    icon: QuestionMarkCircledIcon
-  }
-
-]
+    id: "backlog",
+    label: "Backlog",
+    icon: QuestionMarkCircledIcon,
+  },
+];
 
 export const priorities = [
   {
-    label: 'Low',
-    id: 'low',
-    icon: ArrowDownIcon
+    label: "Low",
+    id: "low",
+    icon: ArrowDownIcon,
   },
   {
-    label: 'Medium',
-    id: 'medium',
-    icon: ArrowRightIcon
+    label: "Medium",
+    id: "medium",
+    icon: ArrowRightIcon,
   },
   {
-    label: 'High',
-    id: 'high',
-    icon: ArrowUpIcon
-  }
-]
+    label: "High",
+    id: "high",
+    icon: ArrowUpIcon,
+  },
+];

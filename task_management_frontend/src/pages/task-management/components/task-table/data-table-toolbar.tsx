@@ -1,63 +1,61 @@
-import { priorities, statuses } from '@/data/initialTasks.ts'
-import { Cross2Icon } from '@radix-ui/react-icons'
-import { Table } from '@tanstack/react-table'
+import { priorities, statuses } from "@/data/initialTasks.ts";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import { Table } from "@tanstack/react-table";
 
-import { Button } from '@/components/ui/button.tsx'
-import { Input } from '@/components/ui/input.tsx'
-import { DataTableViewOptions } from './data-table-view-options.tsx'
+import { Button } from "@/components/ui/button.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import { DataTableViewOptions } from "./data-table-view-options.tsx";
 
-import { DataTableFacetedFilter } from './data-table-faceted-filter.tsx'
+import { DataTableFacetedFilter } from "./data-table-faceted-filter.tsx";
 
 interface DataTableToolbarProps<TData> {
-  table: Table<TData>
+  table: Table<TData>;
 }
 
 export function DataTableToolbar<TData>({
-                                          table
-                                        }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0
-  console.log(table.getColumn('statusId'))
-  
+  table,
+}: DataTableToolbarProps<TData>) {
+  const isFiltered = table.getState().columnFilters.length > 0;
+
   return (
-    <div className='flex items-center justify-between'>
-      <div
-        className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
+    <div className="flex items-center justify-between">
+      <div className="flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2">
         <Input
-          placeholder='Filter tasks...'
-          value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
+          placeholder="Filter tasks..."
+          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn('title')?.setFilterValue(event.target.value)
+            table.getColumn("title")?.setFilterValue(event.target.value)
           }
-          className='h-8 w-[150px] lg:w-[250px]'
+          className="h-8 w-[150px] lg:w-[250px]"
         />
-        <div className='flex gap-x-2'>
-          {table.getColumn('statusId') && (
+        <div className="flex gap-x-2">
+          {table.getColumn("statusId") && (
             <DataTableFacetedFilter
-              column={table.getColumn('statusId')}
-              title='Status'
+              column={table.getColumn("statusId")}
+              title="Status"
               options={statuses}
             />
           )}
-          {table.getColumn('priority') && (
+          {table.getColumn("priority") && (
             <DataTableFacetedFilter
-              column={table.getColumn('priority')}
-              title='Priority'
+              column={table.getColumn("priority")}
+              title="Priority"
               options={priorities}
             />
           )}
         </div>
         {isFiltered && (
           <Button
-            variant='ghost'
+            variant="ghost"
             onClick={() => table.resetColumnFilters()}
-            className='h-8 px-2 lg:px-3'
+            className="h-8 px-2 lg:px-3"
           >
             Reset
-            <Cross2Icon className='ml-2 h-4 w-4' />
+            <Cross2Icon className="ml-2 h-4 w-4" />
           </Button>
         )}
       </div>
       <DataTableViewOptions table={table} />
     </div>
-  )
+  );
 }
