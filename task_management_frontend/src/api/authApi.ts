@@ -1,4 +1,4 @@
-import { ISighupInput, IUser, LoginInput } from "@/types";
+import { IUser, LoginInput, SignupInput } from "@/types";
 import axiosInstance from "./axiosInstance";
 
 interface UserRequest<T> {
@@ -19,7 +19,7 @@ export const LoginUser = async (loginInput: LoginInput) => {
   return response.data;
 };
 
-export const SignupUser = async (signupInput: ISighupInput) => {
+export const SignupUser = async (signupInput: SignupInput) => {
   const response = await axiosInstance.post<UserResponse<IUser>>("users", {
     user: signupInput,
   } as UserRequest<LoginInput>);

@@ -19,13 +19,15 @@ export const taskSchema = z.object({
   priority: z.string(),
 });
 
+export type Task = z.infer<typeof taskSchema>;
+
 export const newTaskSchema = z.object({
   title: z.string().min(1, { message: "Please enter title of the task" }),
   label: z.string().min(1, { message: "Please enter label" }),
   priority: z.string(),
 });
 
-export type Task = z.infer<typeof taskSchema>;
+export type NewTask = z.infer<typeof taskSchema>;
 
 export interface IUser {
   username: string;

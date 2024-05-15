@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const BASE_URL = "http://127.0.0.1:8080/api/";
+const BACKEND_API_URL = "http://127.0.0.1:8080/api/";
 
 const axiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BACKEND_API_URL,
 });
 
 axiosInstance.interceptors.request.use(
