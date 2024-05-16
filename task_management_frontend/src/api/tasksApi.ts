@@ -9,8 +9,12 @@ interface TaskResponse<T> {
   task: T;
 }
 
+interface TasksResponse<T> {
+  tasks: T[];
+}
+
 export const GetAllTasks = async () => {
-  const response = await axiosInstance.get<TaskResponse<Task>>("tasks");
+  const response = await axiosInstance.get<TasksResponse<Task>>("tasks");
   return response.data;
 };
 

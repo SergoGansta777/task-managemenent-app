@@ -166,7 +166,7 @@ export function KanbanBoard({ tasks, setTasks }: KanbanBoardProps) {
         const activeIndex = tasks.findIndex((t) => t.id === activeId);
         const activeTask = tasks[activeIndex];
         if (activeTask) {
-          activeTask.statusId = overId as string;
+          activeTask.statusId = overId as number;
           return arrayMove(tasks, activeIndex, activeIndex);
         }
         return tasks;
@@ -174,7 +174,7 @@ export function KanbanBoard({ tasks, setTasks }: KanbanBoardProps) {
     }
   }
 
-  function deleteColumn(id: string) {
+  function deleteColumn(id: number) {
     const filteredColumns = columns.filter((column) => column.id !== id);
     const filteredTasks = tasks.filter((task) => task.statusId !== id);
     setColumns(filteredColumns);

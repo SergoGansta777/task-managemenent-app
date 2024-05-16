@@ -29,7 +29,7 @@ interface BoardColumnProps {
   column: Status;
   tasks: Task[];
   isOverlay?: boolean;
-  deleteColumn: (id: string) => void;
+  deleteColumn: (id: number) => void;
   deleteTask: (id: string) => void;
 }
 

@@ -21,6 +21,11 @@ struct TaskBody<T> {
     task: T,
 }
 
+#[derive(Serialize, Deserialize)]
+struct TasksBody<T> {
+    tasks: Vec<T>,
+}
+
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct NewTask {
@@ -121,7 +126,7 @@ async fn update_task(
 async fn get_all_tasks(
     auth_user: AuthUser,
     ctx: State<ApiContext>,
-) -> Result<Json<Vec<TaskBody<Task>>>> {
+) -> Result<Json<TasksBody<Task>>> {
     let db_tasks = sqlx::query!(
         r#"
         select id, title, label, status_id, priority, completed_at is null as is_completed
@@ -133,21 +138,19 @@ async fn get_all_tasks(
     .fetch_all(&ctx.db)
     .await?;
 
-    Ok(Json(
-        db_tasks
+    Ok(Json(TasksBody {
+        tasks: db_tasks
             .iter()
-            .map(|db_task| TaskBody {
-                task: Task {
-                    id: db_task.id,
-                    title: db_task.title.clone(),
-                    priority: db_task.priority.clone().unwrap_or("".to_string()),
-                    label: db_task.label.clone().unwrap_or("".to_string()),
-                    is_completed: db_task.is_completed.unwrap_or(false),
-                    status_id: db_task.status_id,
-                },
+            .map(|db_task| Task {
+                id: db_task.id,
+                title: db_task.title.clone(),
+                priority: db_task.priority.clone().unwrap_or("".to_string()),
+                label: db_task.label.clone().unwrap_or("".to_string()),
+                is_completed: db_task.is_completed.unwrap_or(false),
+                status_id: db_task.status_id,
             })
-            .collect::<Vec<TaskBody<Task>>>(),
-    ))
+            .collect::<Vec<Task>>(),
+    }))
 }
 
 async fn get_task(Path(id): Path<Uuid>, ctx: State<ApiContext>) -> Result<Json<TaskBody<Task>>> {

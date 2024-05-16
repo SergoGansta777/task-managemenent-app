@@ -14,7 +14,7 @@ export interface TaskDragData {
 export const taskSchema = z.object({
   id: z.string(),
   title: z.string().min(1, { message: "Please enter title of the task" }),
-  statusId: z.string(),
+  statusId: z.number(),
   label: z.string().min(1, { message: "Please enter label" }),
   priority: z.string(),
 });
