@@ -9,10 +9,10 @@ import {
 import { UserNav } from "@/components/user-nav.tsx";
 import { KanbanBoard } from "@/pages/task-management/components/kanban/KanbanBoard.tsx";
 import TaskTable from "@/pages/task-management/components/task-table/task-table.tsx";
-import { Task } from "@/types";
+import { DeleteTask, GetAllTasks, UpdateTask } from "@/api/tasksApi";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { GetAllTasks } from "@/api/tasksApi";
-import { useQuery } from "@tanstack/react-query";
+import { Task } from "@/types";
 
 const Index = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -27,6 +27,22 @@ const Index = () => {
       setTasks(data.tasks as Task[]);
     }
   }, [isSuccess, data]);
+
+  const updateTaskMutation = useMutation({
+    mutationFn: UpdateTask,
+    mutationKey: ["updateTask"],
+    // onSuccess: () => {
+    //   client.invalidateQueries({ queryKey: ["todos"] });
+    // },
+  });
+
+  const deleteTaskMutation = useMutation({
+    mutationFn: DeleteTask,
+    mutationKey: ["deleteTask"],
+    // onSuccess: () => {
+    //   client.invalidateQueries({ queryKey: ["todos"] });
+    // },
+  });
 
   return (
     <Layout className="relative">
@@ -52,7 +68,12 @@ const Index = () => {
               <h2 className='"bg-gradient-to-b from-foreground to-transparent  leading-none text-transparent" scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl '>
                 Drag and Drop Kanban Board
               </h2>
-              <KanbanBoard tasks={tasks} setTasks={setTasks} />
+              <KanbanBoard
+                updateTaskMutation={updateTaskMutation}
+                deleteTaskMutation={deleteTaskMutation}
+                tasks={tasks}
+                setTasks={setTasks}
+              />
             </div>
           </TabsContent>
           <TabsContent value="table">

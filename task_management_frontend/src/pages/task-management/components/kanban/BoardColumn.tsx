@@ -41,7 +41,7 @@ export function BoardColumn({
   deleteTask,
 }: BoardColumnProps) {
   const tasksIds = useMemo(() => {
-    return tasks.map((task) => task.id);
+    return tasks?.map((task) => task.id);
   }, [tasks]);
 
   const {
@@ -103,7 +103,7 @@ export function BoardColumn({
             {column.icon && <column.icon />}
           </div>
           <div className="opacity-0 flex group-hover:opacity-100 my-0  h-auto flex-row items-center gap-0.5 transition-all ease-linear duration-300">
-            <Badge className="p-1 hover:cursor-default">{tasks.length}</Badge>
+            <Badge className="p-1 hover:cursor-default">{tasks?.length}</Badge>
             <Dialog>
               <DialogTrigger asChild>
                 <Button
@@ -142,7 +142,7 @@ export function BoardColumn({
         <ScrollArea>
           <CardContent className="flex flex-grow flex-col gap-3 p-3">
             <SortableContext items={tasksIds}>
-              {tasks.map((task) => (
+              {tasks?.map((task) => (
                 <TaskCard key={task.id} task={task} deleteTask={deleteTask} />
               ))}
             </SortableContext>

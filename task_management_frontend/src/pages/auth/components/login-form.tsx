@@ -39,7 +39,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
   const { mutateAsync, isPending, isError, error } = useMutation({
     mutationFn: loginMutation,
     onSuccess: () => {
-      navigate("/task_management");
+      navigate("/");
     },
   });
 

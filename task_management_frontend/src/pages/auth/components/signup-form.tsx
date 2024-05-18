@@ -52,7 +52,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
   const { mutateAsync, isPending, isError, error } = useMutation({
     mutationFn: signupMutation,
     onSuccess: () => {
-      navigate("/task_management");
+      navigate("/");
     },
   });
 

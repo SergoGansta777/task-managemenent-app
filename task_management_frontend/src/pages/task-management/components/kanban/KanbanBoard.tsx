@@ -18,13 +18,22 @@ import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { BoardColumn, BoardContainer } from "./BoardColumn.tsx";
+import { UseMutationResult } from "@tanstack/react-query";
+import { TaskResponse } from "@/api/tasksApi.ts";
 
 interface KanbanBoardProps {
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  updateTaskMutation: UseMutationResult<TaskResponse<Task>, Error, Task>;
+  deleteTaskMutation: UseMutationResult<unknown, Error, string, unknown>;
 }
 
-export function KanbanBoard({ tasks, setTasks }: KanbanBoardProps) {
+export function KanbanBoard({
+  tasks,
+  setTasks,
+  updateTaskMutation,
+  deleteTaskMutation,
+}: KanbanBoardProps) {
   const [columns, setColumns] = useState<Column[]>(statuses);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
 
@@ -48,7 +57,7 @@ export function KanbanBoard({ tasks, setTasks }: KanbanBoardProps) {
               <BoardColumn
                 key={col.id}
                 column={col}
-                tasks={tasks.filter((task) => task.statusId === col.id)}
+                tasks={tasks?.filter((task) => task.statusId === col.id)}
                 deleteColumn={deleteColumn}
                 deleteTask={deleteTask}
               />
@@ -63,7 +72,7 @@ export function KanbanBoard({ tasks, setTasks }: KanbanBoardProps) {
             <BoardColumn
               isOverlay
               column={activeColumn}
-              tasks={tasks.filter((task) => task.statusId === activeColumn.id)}
+              tasks={tasks?.filter((task) => task.statusId === activeColumn.id)}
               deleteColumn={deleteColumn}
               deleteTask={deleteTask}
             />
@@ -151,6 +160,7 @@ export function KanbanBoard({ tasks, setTasks }: KanbanBoardProps) {
           activeTask.statusId !== overTask.statusId
         ) {
           activeTask.statusId = overTask.statusId;
+          updateTaskMutation.mutate(activeTask);
           return arrayMove(tasks, activeIndex, overIndex - 1);
         }
 
@@ -167,6 +177,7 @@ export function KanbanBoard({ tasks, setTasks }: KanbanBoardProps) {
         const activeTask = tasks[activeIndex];
         if (activeTask) {
           activeTask.statusId = overId as number;
+          updateTaskMutation.mutate(activeTask);
           return arrayMove(tasks, activeIndex, activeIndex);
         }
         return tasks;
@@ -175,14 +186,26 @@ export function KanbanBoard({ tasks, setTasks }: KanbanBoardProps) {
   }
 
   function deleteColumn(id: number) {
-    const filteredColumns = columns.filter((column) => column.id !== id);
-    const filteredTasks = tasks.filter((task) => task.statusId !== id);
-    setColumns(filteredColumns);
+    console.log(id);
+    const filteredTasks = tasks.filter((task) => {
+      const isNeedToDelete = task.statusId === id;
+      if (isNeedToDelete) {
+        deleteTaskMutation.mutate(task.id);
+      }
+      return !isNeedToDelete;
+    });
     setTasks(filteredTasks);
   }
 
   function deleteTask(id: string) {
-    const filteredTasks = tasks.filter((task) => task.id !== id);
+    console.log(id);
+    const filteredTasks = tasks.filter((task) => {
+      const isNeedToDelete = task.id === id;
+      if (isNeedToDelete) {
+        deleteTaskMutation.mutate(task.id);
+      }
+      return !isNeedToDelete;
+    });
     setTasks(filteredTasks);
   }
 }

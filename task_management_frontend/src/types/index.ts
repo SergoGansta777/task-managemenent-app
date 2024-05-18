@@ -17,6 +17,7 @@ export const taskSchema = z.object({
   statusId: z.number(),
   label: z.string().min(1, { message: "Please enter label" }),
   priority: z.string(),
+  positionId: z.number(),
 });
 
 export type Task = z.infer<typeof taskSchema>;
@@ -25,6 +26,7 @@ export const newTaskSchema = z.object({
   title: z.string().min(1, { message: "Please enter title of the task" }),
   label: z.string().min(1, { message: "Please enter label" }),
   priority: z.string(),
+  positionId: z.number(),
 });
 
 export type NewTask = z.infer<typeof taskSchema>;

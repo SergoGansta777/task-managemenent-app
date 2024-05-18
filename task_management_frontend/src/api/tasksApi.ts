@@ -1,15 +1,15 @@
 import { Task } from "@/types";
 import axiosInstance from "./axiosInstance";
 
-interface TaskRequest<T> {
+export interface TaskRequest<T> {
   task: T;
 }
 
-interface TaskResponse<T> {
+export interface TaskResponse<T> {
   task: T;
 }
 
-interface TasksResponse<T> {
+export interface TasksResponse<T> {
   tasks: T[];
 }
 
