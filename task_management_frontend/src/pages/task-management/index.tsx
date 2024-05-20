@@ -45,8 +45,8 @@ const Index = () => {
   const updateTaskMutation = useMutation({
     mutationFn: UpdateTask,
     mutationKey: ["updateTask"],
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ["todos"] });
+    onSuccess: async () => {
+      await client.invalidateQueries({ queryKey: ["todos"] });
     },
   });
 
@@ -59,27 +59,30 @@ const Index = () => {
   });
 
   return (
-    <Layout className="relative">
+    <Layout className="">
       <LayoutBody className="relative">
         <Tabs
           orientation="vertical"
           defaultValue="kanban"
-          className="space-y-4 relative"
+          className="space-y-4"
         >
-          <div className="w-full overflow-x-scroll flex items-center justify-between pb-2">
-            <TabsList className="mx-2">
+          <div className="w-full flex items-center justify-between pb-2">
+            <TabsList className="">
               <TabsTrigger value="kanban">Kanban</TabsTrigger>
               <TabsTrigger value="table">Table</TabsTrigger>
             </TabsList>
-            <div className="ml-auto flex items-center space-x-4">
+            <div className="ml-auto flex items-center space-x-4 ">
               <ThemeSwitch />
               <UserNav />
             </div>
           </div>
 
           <TabsContent value="kanban">
-            <div className="h-auto flex flex-col items-center gap-8">
-              <h2 className='"bg-gradient-to-b from-foreground to-transparent  leading-none text-transparent" scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl '>
+            <div className="flex flex-col items-center gap-8 ">
+              <h2
+                className="scroll-m-20 text-2xl md:text-4xl
+               font-extrabold tracking-tight lg:text-5xl "
+              >
                 Drag and Drop Kanban Board
               </h2>
               <KanbanBoard
@@ -92,14 +95,12 @@ const Index = () => {
             </div>
           </TabsContent>
           <TabsContent value="table">
-            <div className="h-auto w-full flex flex-col items-center gap-8">
+            <div className="flex flex-col items-center gap-8">
               <h2 className="pb-4 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl ">
                 Sortable table of your tasks!
               </h2>
             </div>
-            <div className="px-2.5">
-              <TaskTable />
-            </div>
+            <TaskTable />
           </TabsContent>
         </Tabs>
       </LayoutBody>

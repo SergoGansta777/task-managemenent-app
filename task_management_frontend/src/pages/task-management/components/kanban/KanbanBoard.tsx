@@ -59,7 +59,10 @@ export function KanbanBoard({
     >
       <BoardContainer>
         <SortableContext items={columnsId}>
-          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3  py-1 px-3">
+          <div
+            className="flex flex-col md:flex-row justify-around items-center
+           gap-4 py-5 px-8 w-screen overflow-scroll"
+          >
             {columns.map((col) => (
               <BoardColumn
                 key={col.id}

@@ -91,7 +91,8 @@ export function TaskCard({
           <span className="sr-only">Move task</span>
           <GripVertical />
         </Button>
-        <div className="flex flex-row gap-1 opacity-0 text-xs group-hover/item:opacity-100  transition-all ease-in-out duration-500">
+        <div className="flex flex-row gap-1 opacity-0 text-xs group-hover/item:opacity-100
+         transition-all ease-in-out duration-500">
           <Badge variant={"outline"} className="-translate-y-0.5 px-1 py-0.5">
             Task
           </Badge>
@@ -110,7 +111,8 @@ export function TaskCard({
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="flex h-8 w-8 p-0 data-[state=open]:bg-muted opacity-0 group-hover/item:opacity-100 group-hover/dropdown:opacity-100
+                className="flex h-8 w-8 p-0 data-[state=open]:bg-muted opacity-0
+                group-hover/item:opacity-100 group-hover/dropdown:opacity-100
                  -translate-y-0.5  transition-all  ease-in-out duration-500"
               >
                 <DotsHorizontalIcon className="h-4 w-4" />
@@ -141,7 +143,7 @@ export function TaskCard({
                 className="group"
               >
                 <div className="group-hover:text-red-500/70 flex flex-row">
-                  <Delete size={20} className="pr-1 " />
+                  <Delete size={20} className="pr-1" />
                   Delete
                 </div>
               </DropdownMenuItem>
