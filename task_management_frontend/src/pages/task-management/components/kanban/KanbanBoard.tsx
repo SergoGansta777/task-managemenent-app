@@ -18,28 +18,21 @@ import React, { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { BoardColumn, BoardContainer } from "./BoardColumn.tsx";
-import { UseMutationResult } from "@tanstack/react-query";
-import { TaskResponse } from "@/api/tasksApi.ts";
 
 interface KanbanBoardProps {
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
-  createTaskMutation: UseMutationResult<
-    TaskResponse<Task>,
-    Error,
-    NewTask,
-    unknown
-  >;
-  updateTaskMutation: UseMutationResult<TaskResponse<Task>, Error, Task>;
-  deleteTaskMutation: UseMutationResult<unknown, Error, string, unknown>;
+  deleteTask: (id: string) => void;
+  addTask: (newTask: NewTask) => void;
+  updateTask: (updatedTask: Task) => void;
 }
 
 export function KanbanBoard({
   tasks,
   setTasks,
-  updateTaskMutation,
-  deleteTaskMutation,
-  createTaskMutation,
+  deleteTask,
+  addTask,
+  updateTask,
 }: KanbanBoardProps) {
   const [columns, setColumns] = useState<Column[]>(statuses);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
@@ -179,7 +172,7 @@ export function KanbanBoard({
           activeTask.statusId !== overTask.statusId
         ) {
           activeTask.statusId = overTask.statusId;
-          updateTaskMutation.mutate(activeTask);
+          updateTask(activeTask);
           return arrayMove(tasks, activeIndex, overIndex - 1);
         }
 
@@ -196,7 +189,7 @@ export function KanbanBoard({
         const activeTask = tasks[activeIndex];
         if (activeTask) {
           activeTask.statusId = overId as number;
-          updateTaskMutation.mutate(activeTask);
+          updateTask(activeTask);
           return arrayMove(tasks, activeIndex, activeIndex);
         }
         return tasks;
@@ -208,29 +201,10 @@ export function KanbanBoard({
     const filteredTasks = tasks.filter((task) => {
       const isNeedToDelete = task.statusId === id;
       if (isNeedToDelete) {
-        deleteTaskMutation.mutate(task.id);
+        deleteTask(task.id);
       }
       return !isNeedToDelete;
     });
     setTasks(filteredTasks);
-  }
-
-  function deleteTask(id: string) {
-    const filteredTasks = tasks.filter((task) => {
-      const isNeedToDelete = task.id === id;
-      if (isNeedToDelete) {
-        deleteTaskMutation.mutate(task.id);
-      }
-      return !isNeedToDelete;
-    });
-    setTasks(filteredTasks);
-  }
-
-  function addTask(newTask: NewTask) {
-    createTaskMutation.mutate(newTask);
-  }
-
-  function updateTask(updatedTask: Task) {
-    updateTaskMutation.mutate(updatedTask);
   }
 }

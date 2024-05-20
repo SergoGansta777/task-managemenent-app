@@ -91,8 +91,10 @@ export function TaskCard({
           <span className="sr-only">Move task</span>
           <GripVertical />
         </Button>
-        <div className="flex flex-row gap-1 opacity-0 text-xs group-hover/item:opacity-100
-         transition-all ease-in-out duration-500">
+        <div
+          className="flex flex-row gap-1 opacity-0 text-xs group-hover/item:opacity-100
+         transition-all ease-in-out duration-500"
+        >
           <Badge variant={"outline"} className="-translate-y-0.5 px-1 py-0.5">
             Task
           </Badge>
@@ -119,35 +121,35 @@ export function TaskCard({
                 <span className="sr-only">Open menu</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-[160px] ">
-              <Dialog>
+            <Dialog>
+              <DropdownMenuContent align="end" className="w-[160px] ">
                 <DialogTrigger asChild>
                   <DropdownMenuItem>
                     <Pencil size={20} className="pr-1" />
                     Edit
                   </DropdownMenuItem>
                 </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader className="text-3xl tracking-wide font-semibold">
-                    Update your task
-                  </DialogHeader>
-                  <DialogDescription>
-                    Provide another info about your task and save!
-                  </DialogDescription>
-                  <UpdateTaskForm updateTask={updateTask} task={task} />
-                </DialogContent>
-              </Dialog>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => deleteTask(task.id)}
-                className="group"
-              >
-                <div className="group-hover:text-red-500/70 flex flex-row">
-                  <Delete size={20} className="pr-1" />
-                  Delete
-                </div>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => deleteTask(task.id)}
+                  className="group"
+                >
+                  <div className="group-hover:text-red-500/70 flex flex-row">
+                    <Delete size={20} className="pr-1" />
+                    Delete
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+              <DialogContent>
+                <DialogHeader className="text-3xl tracking-wide font-semibold">
+                  Update your task
+                </DialogHeader>
+                <DialogDescription>
+                  Provide another info about your task and save!
+                </DialogDescription>
+                <UpdateTaskForm updateTask={updateTask} task={task} />
+              </DialogContent>
+            </Dialog>
           </DropdownMenu>
         </div>
       </CardHeader>

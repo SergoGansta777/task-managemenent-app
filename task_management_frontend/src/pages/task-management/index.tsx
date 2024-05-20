@@ -17,7 +17,7 @@ import {
 } from "@/api/tasksApi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { Task } from "@/types";
+import { NewTask, Task } from "@/types";
 
 const Index = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -44,9 +44,9 @@ const Index = () => {
   const updateTaskMutation = useMutation({
     mutationFn: UpdateTask,
     mutationKey: ["updateTask"],
-    onSuccess: async () => {
-      await client.invalidateQueries({ queryKey: ["todos"] });
-    },
+    // onSuccess: async () => {
+    //   await client.invalidateQueries({ queryKey: ["tasks"] });
+    // },
   });
 
   const deleteTaskMutation = useMutation({
@@ -85,9 +85,9 @@ const Index = () => {
                 Drag and Drop Kanban Board
               </h2>
               <KanbanBoard
-                createTaskMutation={createTaskMutation}
-                updateTaskMutation={updateTaskMutation}
-                deleteTaskMutation={deleteTaskMutation}
+                deleteTask={deleteTask}
+                addTask={addTask}
+                updateTask={updateTask}
                 tasks={tasks}
                 setTasks={setTasks}
               />
@@ -105,6 +105,33 @@ const Index = () => {
       </LayoutBody>
     </Layout>
   );
-};
 
+  function deleteTask(id: string) {
+    const filteredTasks = tasks.filter((task) => {
+      const isNeedToDelete = task.id === id;
+      if (isNeedToDelete) {
+        deleteTaskMutation.mutate(task.id);
+      }
+      return !isNeedToDelete;
+    });
+    setTasks(filteredTasks);
+  }
+
+  function addTask(newTask: NewTask) {
+    createTaskMutation.mutate(newTask);
+  }
+
+  function updateTask(updatedTask: Task) {
+    setTasks((tasks) =>
+      tasks.map((task) => {
+        if (task.id === updatedTask.id) {
+          return updatedTask;
+        } else {
+          return task;
+        }
+      }),
+    );
+    updateTaskMutation.mutate(updatedTask);
+  }
+};
 export default Index;
