@@ -72,7 +72,7 @@ export function BoardColumn({
   };
 
   const variants = cva(
-    "h-[550px] text-sm max-h-[650px] w-[350px] bg-primary-foreground flex flex-col snap-center group",
+    "h-[400px] md:h-[520px] lg:h-[590px] text-sm w-[350px] bg-primary-foreground flex flex-col snap-center group",
     {
       variants: {
         dragging: {

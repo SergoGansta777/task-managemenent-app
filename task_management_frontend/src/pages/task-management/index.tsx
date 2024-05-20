@@ -29,7 +29,6 @@ const Index = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(data);
       setTasks(data.tasks as Task[]);
     }
   }, [isSuccess, data]);
@@ -78,7 +77,7 @@ const Index = () => {
           </div>
 
           <TabsContent value="kanban">
-            <div className="flex flex-col items-center gap-8 ">
+            <div className="flex flex-col items-center gap-1 ">
               <h2
                 className="scroll-m-20 text-2xl md:text-4xl
                font-extrabold tracking-tight lg:text-5xl "

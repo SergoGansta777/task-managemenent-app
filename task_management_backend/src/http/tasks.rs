@@ -43,7 +43,6 @@ struct UpdateTask {
     priority: String,
     label: String,
     status_id: i32,
-    position_id: i32,
 }
 
 #[derive(Serialize)]
@@ -99,15 +98,13 @@ async fn update_task(
         set title = $1,
             priority = $2,
             label = $3,
-            position_id = $4,
-            status_id = $5
-        where id = $6
+            status_id = $4
+        where id = $5
         returning id, title, priority, label, status_id, completed_at is not null as is_completed
         "#,
         req.task.title,
         req.task.priority,
         req.task.label,
-        req.task.position_id,
         req.task.status_id,
         req.task.id
     )

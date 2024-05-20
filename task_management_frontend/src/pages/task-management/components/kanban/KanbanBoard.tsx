@@ -61,7 +61,7 @@ export function KanbanBoard({
         <SortableContext items={columnsId}>
           <div
             className="flex flex-col md:flex-row justify-around items-center
-           gap-4 py-5 px-8 w-screen overflow-scroll"
+           gap-4 pt-5 px-8 w-screen overflow-scroll scroll-auto scrollbar-hide"
           >
             {columns.map((col) => (
               <BoardColumn
