@@ -1,6 +1,6 @@
 import { statuses } from "@/constants";
 import { TaskCard } from "@/pages/task-management/components/kanban/TaskCard.tsx";
-import { type Column, Task } from "@/types";
+import { type Column, Task, NewTask } from "@/types";
 import { hasDraggableData } from "@/utils";
 import {
   DndContext,
@@ -24,6 +24,12 @@ import { TaskResponse } from "@/api/tasksApi.ts";
 interface KanbanBoardProps {
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  createTaskMutation: UseMutationResult<
+    TaskResponse<Task>,
+    Error,
+    NewTask,
+    unknown
+  >;
   updateTaskMutation: UseMutationResult<TaskResponse<Task>, Error, Task>;
   deleteTaskMutation: UseMutationResult<unknown, Error, string, unknown>;
 }
@@ -33,6 +39,7 @@ export function KanbanBoard({
   setTasks,
   updateTaskMutation,
   deleteTaskMutation,
+  createTaskMutation,
 }: KanbanBoardProps) {
   const [columns, setColumns] = useState<Column[]>(statuses);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
@@ -60,6 +67,7 @@ export function KanbanBoard({
                 tasks={tasks?.filter((task) => task.statusId === col.id)}
                 deleteColumn={deleteColumn}
                 deleteTask={deleteTask}
+                addTask={addTask}
               />
             ))}
           </div>
@@ -75,6 +83,7 @@ export function KanbanBoard({
               tasks={tasks?.filter((task) => task.statusId === activeColumn.id)}
               deleteColumn={deleteColumn}
               deleteTask={deleteTask}
+              addTask={addTask}
             />
           )}
           {activeTask && (
@@ -186,7 +195,6 @@ export function KanbanBoard({
   }
 
   function deleteColumn(id: number) {
-    console.log(id);
     const filteredTasks = tasks.filter((task) => {
       const isNeedToDelete = task.statusId === id;
       if (isNeedToDelete) {
@@ -198,7 +206,6 @@ export function KanbanBoard({
   }
 
   function deleteTask(id: string) {
-    console.log(id);
     const filteredTasks = tasks.filter((task) => {
       const isNeedToDelete = task.id === id;
       if (isNeedToDelete) {
@@ -207,5 +214,10 @@ export function KanbanBoard({
       return !isNeedToDelete;
     });
     setTasks(filteredTasks);
+  }
+
+  function addTask(newTask: NewTask) {
+    console.log(newTask)
+    createTaskMutation.mutate(newTask);
   }
 }

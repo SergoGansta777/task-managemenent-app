@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { DialogClose } from '@/components/ui/dialog.tsx'
 import {
   Form,
   FormControl,
@@ -19,17 +20,23 @@ import {
 } from "@/components/ui/select";
 import { priorities } from "@/data/initialTasks";
 import { cn } from "@/lib/utils";
-import { newTaskSchema } from "@/types";
+import {
+  NewTask,
+  type NewTaskInput, newTaskInputSchema,
+} from '@/types'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HTMLAttributes } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-interface NewTaskFormProps extends HTMLAttributes<HTMLDivElement> {}
+interface NewTaskFormProps extends HTMLAttributes<HTMLDivElement> {
+  addTask: (newTask: NewTask) => void;
+  statusId: number
+}
 
-const NewTaskForm = ({ className, ...props }: NewTaskFormProps) => {
-  const form = useForm<z.infer<typeof newTaskSchema>>({
-    resolver: zodResolver(newTaskSchema),
+const NewTaskForm = ({ addTask, statusId, className, ...props }: NewTaskFormProps) => {
+  const form = useForm<z.infer<typeof newTaskInputSchema>>({
+    resolver: zodResolver(newTaskInputSchema),
     defaultValues: {
       title: "",
       label: "",
@@ -37,9 +44,10 @@ const NewTaskForm = ({ className, ...props }: NewTaskFormProps) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof newTaskSchema>) {
-    console.log(values);
+  function onSubmit(newTaskInput: NewTaskInput) {
+    addTask({...newTaskInput, statusId} as NewTask);
   }
+  
   return (
     <div className={cn("grid gap-8", className)} {...props}>
       <Form {...form}>
@@ -114,9 +122,11 @@ const NewTaskForm = ({ className, ...props }: NewTaskFormProps) => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="test-lg px-6">
-                Add new task
-              </Button>
+              <DialogClose asChild>
+                <Button type="submit" className="test-lg px-6">
+                  Add new task
+                </Button>
+              </DialogClose>
             </div>
           </div>
         </form>

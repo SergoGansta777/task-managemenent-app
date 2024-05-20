@@ -9,7 +9,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { useMemo } from "react";
 import { cva } from "class-variance-authority";
 import { CirclePlus, GripVertical, Trash2 } from "lucide-react";
-import { Column, type ColumnType, type Status, Task } from "@/types";
+import { Column, type ColumnType, type Status, Task, NewTask } from "@/types";
 import { Badge } from "@/components/ui/badge.tsx";
 import {
   Dialog,
@@ -31,6 +31,7 @@ interface BoardColumnProps {
   isOverlay?: boolean;
   deleteColumn: (id: number) => void;
   deleteTask: (id: string) => void;
+  addTask: (newTask: NewTask) => void;
 }
 
 export function BoardColumn({
@@ -39,6 +40,7 @@ export function BoardColumn({
   isOverlay,
   deleteColumn,
   deleteTask,
+  addTask,
 }: BoardColumnProps) {
   const tasksIds = useMemo(() => {
     return tasks?.map((task) => task.id);
@@ -120,7 +122,7 @@ export function BoardColumn({
                 <DialogDescription>
                   Provide more info about your task and save!
                 </DialogDescription>
-                <NewTaskForm />
+                <NewTaskForm addTask={addTask} statusId={column.id} />
               </DialogContent>
             </Dialog>
             <AlertDialogForAction

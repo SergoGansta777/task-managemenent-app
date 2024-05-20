@@ -9,8 +9,13 @@ import {
 import { UserNav } from "@/components/user-nav.tsx";
 import { KanbanBoard } from "@/pages/task-management/components/kanban/KanbanBoard.tsx";
 import TaskTable from "@/pages/task-management/components/task-table/task-table.tsx";
-import { DeleteTask, GetAllTasks, UpdateTask } from "@/api/tasksApi";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  CreateTask,
+  DeleteTask,
+  GetAllTasks,
+  UpdateTask,
+} from "@/api/tasksApi";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from "react";
 import { Task } from "@/types";
 
@@ -20,6 +25,7 @@ const Index = () => {
     queryKey: ["tasks"],
     queryFn: GetAllTasks,
   });
+  const client = useQueryClient();
 
   useEffect(() => {
     if (isSuccess) {
@@ -27,6 +33,14 @@ const Index = () => {
       setTasks(data.tasks as Task[]);
     }
   }, [isSuccess, data]);
+
+  const createTaskMutation = useMutation({
+    mutationFn: CreateTask,
+    mutationKey: ["CreateTask"],
+    onSuccess: async () => {
+      await client.invalidateQueries({ queryKey: ["tasks"] });
+    },
+  });
 
   const updateTaskMutation = useMutation({
     mutationFn: UpdateTask,
@@ -69,6 +83,7 @@ const Index = () => {
                 Drag and Drop Kanban Board
               </h2>
               <KanbanBoard
+                createTaskMutation={createTaskMutation}
                 updateTaskMutation={updateTaskMutation}
                 deleteTaskMutation={deleteTaskMutation}
                 tasks={tasks}

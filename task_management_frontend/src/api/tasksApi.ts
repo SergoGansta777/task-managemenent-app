@@ -1,4 +1,4 @@
-import { Task } from "@/types";
+import { type NewTask, Task } from '@/types'
 import axiosInstance from "./axiosInstance";
 
 export interface TaskRequest<T> {
@@ -28,7 +28,7 @@ export const GetTask = async (id: string) => {
   return response.data;
 };
 
-export const CreateTask = async (newTask: Task) => {
+export const CreateTask = async (newTask: NewTask) => {
   const response = await axiosInstance.post<TaskResponse<Task>>("tasks", {
     task: newTask,
   } as TaskRequest<Task>);

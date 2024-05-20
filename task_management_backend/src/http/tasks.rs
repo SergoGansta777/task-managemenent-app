@@ -6,6 +6,8 @@ use axum::{Json, Router};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
+const DEFAULT_TASK_STATUS: i32 = 2;
+
 pub(crate) fn router() -> Router<ApiContext> {
     Router::new()
         .route("/api/tasks", post(create_task).get(get_all_tasks))
@@ -33,7 +35,6 @@ struct NewTask {
     priority: String,
     label: String,
     status_id: i32,
-    position_id: i32,
 }
 
 #[derive(Deserialize)]
@@ -56,7 +57,6 @@ struct Task {
     label: String,
     is_completed: bool,
     status_id: i32,
-    position_id: i32,
 }
 
 async fn create_task(
@@ -87,7 +87,6 @@ async fn create_task(
             label: req.task.label,
             is_completed: false,
             status_id: req.task.status_id,
-            position_id: req.task.position_id,
         },
     }))
 }
@@ -105,7 +104,7 @@ async fn update_task(
             position_id = $4,
             status_id = $5
         where id = $6
-        returning id, title, priority, label, status_id, position_id, completed_at is not null as is_completed
+        returning id, title, priority, label, status_id, completed_at is not null as is_completed
         "#,
         req.task.title,
         req.task.priority,
@@ -125,7 +124,6 @@ async fn update_task(
             status_id: updated_task.status_id,
             is_completed: updated_task.is_completed.unwrap_or(false),
             priority: updated_task.priority.unwrap_or("low".to_owned()),
-            position_id: updated_task.position_id.unwrap(),
         },
     }))
 }
@@ -136,7 +134,7 @@ async fn get_all_tasks(
 ) -> Result<Json<TasksBody<Task>>> {
     let db_tasks = sqlx::query!(
         r#"
-        select id, title, label, status_id, priority, position_id, completed_at is not null as is_completed
+        select id, title, label, status_id, priority,  completed_at is not null as is_completed
         from task
         where user_id = $1
         "#,
@@ -155,7 +153,6 @@ async fn get_all_tasks(
                 label: db_task.label.clone().unwrap_or("".to_string()),
                 is_completed: db_task.is_completed.unwrap_or(false),
                 status_id: db_task.status_id,
-                position_id: db_task.position_id.unwrap(),
             })
             .collect::<Vec<Task>>(),
     }))
@@ -164,7 +161,7 @@ async fn get_all_tasks(
 async fn get_task(Path(id): Path<Uuid>, ctx: State<ApiContext>) -> Result<Json<TaskBody<Task>>> {
     let task = sqlx::query!(
         r#"
-        select id, title, label, status_id, priority, position_id, completed_at is not null as is_completed
+        select id, title, label, status_id, priority, completed_at is not null as is_completed
         from task
         where id = $1
         "#,
@@ -181,7 +178,6 @@ async fn get_task(Path(id): Path<Uuid>, ctx: State<ApiContext>) -> Result<Json<T
             label: task.label.unwrap_or("".to_string()),
             is_completed: task.is_completed.unwrap_or(false),
             status_id: task.status_id,
-            position_id: task.position_id.unwrap(),
         },
     }))
 }
