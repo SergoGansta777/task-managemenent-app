@@ -14,13 +14,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PasswordInput } from "@/components/ui/password-input";
 import { cn } from "@/lib/utils";
-import { SignupInput, SignupScheme } from "@/types";
+import { SignupInput, signupScheme } from "@/types";
 import { useAuth } from "@/context/authContext";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 interface SignUpFormProps extends HTMLAttributes<HTMLDivElement> {}
 
-const formSchema = SignupScheme.extend({
+const formSchema = signupScheme.extend({
   confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match.",

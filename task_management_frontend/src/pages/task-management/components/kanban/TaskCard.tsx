@@ -15,14 +15,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import UpdateTaskForm from "../update-task-form";
 
 interface TaskCardProps {
   task: Task;
   isOverlay?: boolean;
   deleteTask: (id: string) => void;
+  updateTask: (updatedTask: Task) => void;
 }
 
-export function TaskCard({ task, isOverlay, deleteTask }: TaskCardProps) {
+export function TaskCard({
+  task,
+  isOverlay,
+  deleteTask,
+  updateTask,
+}: TaskCardProps) {
   const {
     setNodeRef,
     attributes,
@@ -91,23 +105,36 @@ export function TaskCard({ task, isOverlay, deleteTask }: TaskCardProps) {
             }
           </Badge>
         </div>
-        <div className="z-50">
+        <div className="z-50 group/dropdown">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="flex h-8 w-8 p-0 data-[state=open]:bg-muted opacity-0 group-hover/item:opacity-100 peer-hover:opacity-100
+                className="flex h-8 w-8 p-0 data-[state=open]:bg-muted opacity-0 group-hover/item:opacity-100 group-hover/dropdown:opacity-100
                  -translate-y-0.5  transition-all  ease-in-out duration-500"
               >
                 <DotsHorizontalIcon className="h-4 w-4" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-[160px] peer">
-              <DropdownMenuItem>
-                <Pencil size={20} className="pr-1" />
-                Edit
-              </DropdownMenuItem>
+            <DropdownMenuContent align="end" className="w-[160px] ">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <DropdownMenuItem>
+                    <Pencil size={20} className="pr-1" />
+                    Edit
+                  </DropdownMenuItem>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader className="text-3xl tracking-wide font-semibold">
+                    Update your task
+                  </DialogHeader>
+                  <DialogDescription>
+                    Provide another info about your task and save!
+                  </DialogDescription>
+                  <UpdateTaskForm updateTask={updateTask} task={task} />
+                </DialogContent>
+              </Dialog>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => deleteTask(task.id)}

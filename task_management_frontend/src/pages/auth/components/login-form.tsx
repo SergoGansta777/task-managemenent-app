@@ -16,14 +16,14 @@ import { HTMLAttributes } from "react";
 import { useForm } from "react-hook-form";
 import { PasswordInput } from "@/components/ui/password-input";
 import { useAuth } from "@/context/authContext";
-import { LoginInput, LoginScheme } from "@/types";
+import { LoginInput, loginScheme } from "@/types";
 
 interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {}
 
 export function LoginForm({ className, ...props }: UserAuthFormProps) {
   const navigate = useNavigate();
   const form = useForm<LoginInput>({
-    resolver: zodResolver(LoginScheme),
+    resolver: zodResolver(loginScheme),
     defaultValues: {
       email: "",
       password: "",

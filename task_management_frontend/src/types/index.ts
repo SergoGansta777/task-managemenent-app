@@ -36,6 +36,14 @@ export const newTaskInputSchema = z.object({
   priority: z.string(),
 });
 
+export type UpdateTask = z.infer<typeof updateTaskSchema>;
+
+export const updateTaskSchema = z.object({
+  title: z.string().min(1, { message: "Please enter title of the task" }),
+  label: z.string().min(1, { message: "Please enter label" }),
+  priority: z.string(),
+});
+
 export type NewTaskInput = z.infer<typeof newTaskInputSchema>;
 
 export interface IUser {
@@ -44,7 +52,7 @@ export interface IUser {
   token: string;
 }
 
-export const LoginScheme = z.object({
+export const loginScheme = z.object({
   email: z
     .string()
     .min(1, { message: "Please enter your email" })
@@ -59,9 +67,9 @@ export const LoginScheme = z.object({
     }),
 });
 
-export type LoginInput = z.infer<typeof LoginScheme>;
+export type LoginInput = z.infer<typeof loginScheme>;
 
-export const SignupScheme = z.object({
+export const signupScheme = z.object({
   username: z.string().min(1, { message: "Please enter your username" }),
   email: z
     .string()
@@ -72,4 +80,4 @@ export const SignupScheme = z.object({
   }),
 });
 
-export type SignupInput = z.infer<typeof SignupScheme>;
+export type SignupInput = z.infer<typeof signupScheme>;

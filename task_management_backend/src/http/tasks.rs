@@ -6,8 +6,6 @@ use axum::{Json, Router};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-const DEFAULT_TASK_STATUS: i32 = 2;
-
 pub(crate) fn router() -> Router<ApiContext> {
     Router::new()
         .route("/api/tasks", post(create_task).get(get_all_tasks))

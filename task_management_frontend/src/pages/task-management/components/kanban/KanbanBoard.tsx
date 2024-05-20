@@ -14,7 +14,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { BoardColumn, BoardContainer } from "./BoardColumn.tsx";
@@ -68,6 +68,7 @@ export function KanbanBoard({
                 deleteColumn={deleteColumn}
                 deleteTask={deleteTask}
                 addTask={addTask}
+                updateTask={updateTask}
               />
             ))}
           </div>
@@ -84,10 +85,16 @@ export function KanbanBoard({
               deleteColumn={deleteColumn}
               deleteTask={deleteTask}
               addTask={addTask}
+              updateTask={updateTask}
             />
           )}
           {activeTask && (
-            <TaskCard task={activeTask} isOverlay deleteTask={deleteTask} />
+            <TaskCard
+              task={activeTask}
+              isOverlay
+              deleteTask={deleteTask}
+              updateTask={updateTask}
+            />
           )}
         </DragOverlay>,
         document.body,
@@ -217,7 +224,10 @@ export function KanbanBoard({
   }
 
   function addTask(newTask: NewTask) {
-    console.log(newTask)
     createTaskMutation.mutate(newTask);
+  }
+
+  function updateTask(updatedTask: Task) {
+    updateTaskMutation.mutate(updatedTask);
   }
 }

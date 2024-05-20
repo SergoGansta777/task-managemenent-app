@@ -6,7 +6,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area.tsx";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { useDndContext } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { cva } from "class-variance-authority";
 import { CirclePlus, GripVertical, Trash2 } from "lucide-react";
 import { Column, type ColumnType, type Status, Task, NewTask } from "@/types";
@@ -32,6 +32,7 @@ interface BoardColumnProps {
   deleteColumn: (id: number) => void;
   deleteTask: (id: string) => void;
   addTask: (newTask: NewTask) => void;
+  updateTask: (updatedTask: Task) => void;
 }
 
 export function BoardColumn({
@@ -41,6 +42,7 @@ export function BoardColumn({
   deleteColumn,
   deleteTask,
   addTask,
+  updateTask,
 }: BoardColumnProps) {
   const tasksIds = useMemo(() => {
     return tasks?.map((task) => task.id);
@@ -145,7 +147,12 @@ export function BoardColumn({
           <CardContent className="flex flex-grow flex-col gap-3 p-3">
             <SortableContext items={tasksIds}>
               {tasks?.map((task) => (
-                <TaskCard key={task.id} task={task} deleteTask={deleteTask} />
+                <TaskCard
+                  key={task.id}
+                  task={task}
+                  deleteTask={deleteTask}
+                  updateTask={updateTask}
+                />
               ))}
             </SortableContext>
           </CardContent>

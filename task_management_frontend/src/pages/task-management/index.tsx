@@ -15,7 +15,7 @@ import {
   GetAllTasks,
   UpdateTask,
 } from "@/api/tasksApi";
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Task } from "@/types";
 
@@ -45,9 +45,9 @@ const Index = () => {
   const updateTaskMutation = useMutation({
     mutationFn: UpdateTask,
     mutationKey: ["updateTask"],
-    // onSuccess: () => {
-    //   client.invalidateQueries({ queryKey: ["todos"] });
-    // },
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["todos"] });
+    },
   });
 
   const deleteTaskMutation = useMutation({
