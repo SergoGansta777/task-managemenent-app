@@ -1,3 +1,5 @@
+import { AlertDialogForAction } from '@/components/alert-dialog.tsx'
+import { taskSchema } from '@/types'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -17,16 +19,38 @@ import {
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
+  deleteTask: (id: string) => void;
 }
 
 export function DataTablePagination<TData>({
-                                             table
+                                             table, deleteTask
                                            }: DataTablePaginationProps<TData>) {
   return (
     <div className='flex items-center justify-between overflow-auto px-2'>
-      <div className='hidden flex-1 text-sm text-muted-foreground sm:block'>
-        {table.getFilteredSelectedRowModel().rows.length} of{' '}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
+      <div
+        className='flex flex-row gap-1 md:gap-2 lg:gap-3 items-center justify-between'>
+        <div className='hidden flex-1 text-sm text-muted-foreground sm:block'>
+          {table.getFilteredSelectedRowModel().rows.length} of{' '}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
+        <AlertDialogForAction
+          title={'Are you absolutely sure?'}
+          description={
+            'This action cannot be undone. This will permanently delete this column and remove all related tasks from our servers.'
+          }
+          action={() => {
+            table.getFilteredSelectedRowModel().rows.forEach((row) => {
+              const task = taskSchema.parse(row.original)
+              deleteTask(task.id)
+            })
+            table.resetRowSelection()
+          }
+          }
+        >
+          <Button variant='destructive' className='opacity-95 px-2 lg:px-3'>
+            Delete selecting
+          </Button>
+        </AlertDialogForAction>
       </div>
       <div className='flex items-center sm:space-x-6 lg:space-x-8'>
         <div className='flex items-center space-x-2'>

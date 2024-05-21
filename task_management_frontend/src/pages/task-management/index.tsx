@@ -103,7 +103,6 @@ const Index = () => {
               tasks={tasks}
               addTask={addTask}
               updateTask={updateTask}
-              setTasks={setTasks}
               deleteTask={deleteTask}
             />
           </TabsContent>

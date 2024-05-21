@@ -31,12 +31,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   addTask: (newTask: NewTask) => void;
+  deleteTask: (id: string) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  addTask
+  addTask,
+  deleteTask
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -121,7 +123,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      <DataTablePagination table={table} deleteTask={deleteTask} />
     </div>
   );
 }
