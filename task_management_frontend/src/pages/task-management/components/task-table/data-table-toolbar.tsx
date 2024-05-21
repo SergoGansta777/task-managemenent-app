@@ -1,20 +1,32 @@
-import { priorities, statuses } from "@/data/initialTasks.ts";
-import type { Status } from '@/types'
+import {
+  Dialog,
+  DialogContent, DialogDescription, DialogHeader,
+  DialogTrigger
+} from '@/components/ui/dialog.tsx'
+import NewTaskForm from '@/pages/task-management/components/new-task-form.tsx'
+import type { NewTask } from '@/types'
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { Table } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import { CirclePlus } from 'lucide-react'
 import { DataTableViewOptions } from "./data-table-view-options.tsx";
 
 import { DataTableFacetedFilter } from "./data-table-faceted-filter.tsx";
+import {
+  DEFAULT_TASK_STATUS_ID,
+  priorities,
+  statuses
+} from '@/constants/index.ts'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
+  addTask: (newTask: NewTask) => void;
 }
 
 export function DataTableToolbar<TData>({
-  table,
+  table, addTask
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
@@ -44,6 +56,8 @@ export function DataTableToolbar<TData>({
             <DataTableFacetedFilter
               column={table.getColumn("priority")}
               title="Priority"
+              /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+              // @ts-expect-error
               options={priorities}
             />
           )}
@@ -59,7 +73,29 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      <DataTableViewOptions table={table} />
+      <div className="flex justify-between items-center gap-2">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              variant="default"
+              className="h-8 px-2 lg:px-3 opacity-90"
+            >
+              <CirclePlus className="px-1" />
+              Create task
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader className="text-3xl tracking-wide font-semibold">
+              Create new task
+            </DialogHeader>
+            <DialogDescription>
+              Provide more info about your task and save!
+            </DialogDescription>
+            <NewTaskForm addTask={addTask} statusId={DEFAULT_TASK_STATUS_ID} />
+          </DialogContent>
+        </Dialog>
+        <DataTableViewOptions table={table} />
+      </div>
     </div>
   );
 }

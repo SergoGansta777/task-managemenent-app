@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { priorities } from "@/data/initialTasks";
+import { priorities } from "@/constants";
 import { cn } from "@/lib/utils";
 import { Task, UpdateTask, updateTaskSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -97,7 +97,7 @@ const UpdateTaskForm = ({
                     <FormControl>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        defaultValue={field.value.toString()}
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Choose" className="px-4" />
@@ -106,10 +106,7 @@ const UpdateTaskForm = ({
                           <SelectGroup>
                             <SelectLabel>Priorities</SelectLabel>
                             {priorities.map((priority) => (
-                              <SelectItem
-                                key={priority.value}
-                                value={priority.value}
-                              >
+                              <SelectItem key={priority.id} value={priority.id}>
                                 <div className="flex gap-2 items-center">
                                   <priority.icon />
                                   {priority.label}

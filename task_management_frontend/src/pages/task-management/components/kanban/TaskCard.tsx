@@ -13,6 +13,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
 import {
@@ -103,7 +104,7 @@ export function TaskCard({
           </Badge>
           <Badge variant={"default"} className="-translate-y-0.5 px-1 py-0.5">
             {
-              priorities.find((priority) => priority.value === task.priority)
+              priorities.find((priority) => priority.id === task.priority)
                 ?.label
             }
           </Badge>
@@ -138,6 +139,7 @@ export function TaskCard({
                     <Delete size={20} className="pr-1" />
                     Delete
                   </div>
+                  <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
                 </DropdownMenuItem>
               </DropdownMenuContent>
               <DialogContent>

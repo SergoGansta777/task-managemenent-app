@@ -99,7 +99,13 @@ const Index = () => {
                 Sortable table of your tasks!
               </h2>
             </div>
-            <TaskTable />
+            <TaskTable
+              tasks={tasks}
+              addTask={addTask}
+              updateTask={updateTask}
+              setTasks={setTasks}
+              deleteTask={deleteTask}
+            />
           </TabsContent>
         </Tabs>
       </LayoutBody>

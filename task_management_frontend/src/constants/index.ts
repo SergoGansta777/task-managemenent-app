@@ -8,22 +8,6 @@ import {
   QuestionMarkCircledIcon,
   StopwatchIcon,
 } from "@radix-ui/react-icons";
-
-export const labels = [
-  {
-    id: "bug",
-    label: "Bug",
-  },
-  {
-    id: "feature",
-    label: "Feature",
-  },
-  {
-    id: "documentation",
-    label: "Documentation",
-  },
-];
-
 export const statuses = [
   {
     id: 2,
@@ -55,17 +39,19 @@ export const statuses = [
 export const priorities = [
   {
     label: "Low",
-    value: "1",
+    id: "1",
     icon: ArrowDownIcon,
   },
   {
     label: "Medium",
-    value: "2",
+    id: "2",
     icon: ArrowRightIcon,
   },
   {
     label: "High",
-    value: "3",
+    id: "3",
     icon: ArrowUpIcon,
   },
 ];
+
+export const DEFAULT_TASK_STATUS_ID = 2;

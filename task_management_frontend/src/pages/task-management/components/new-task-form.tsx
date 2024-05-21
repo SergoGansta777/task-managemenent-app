@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { DialogClose } from '@/components/ui/dialog.tsx'
+import { DialogClose } from "@/components/ui/dialog.tsx";
 import {
   Form,
   FormControl,
@@ -18,12 +18,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { priorities } from "@/data/initialTasks";
+import { priorities } from "@/constants";
 import { cn } from "@/lib/utils";
-import {
-  NewTask,
-  type NewTaskInput, newTaskInputSchema,
-} from '@/types'
+import { NewTask, type NewTaskInput, newTaskInputSchema } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HTMLAttributes } from "react";
 import { useForm } from "react-hook-form";
@@ -31,10 +28,15 @@ import { z } from "zod";
 
 interface NewTaskFormProps extends HTMLAttributes<HTMLDivElement> {
   addTask: (newTask: NewTask) => void;
-  statusId: number
+  statusId: number;
 }
 
-const NewTaskForm = ({ addTask, statusId, className, ...props }: NewTaskFormProps) => {
+const NewTaskForm = ({
+  addTask,
+  statusId,
+  className,
+  ...props
+}: NewTaskFormProps) => {
   const form = useForm<z.infer<typeof newTaskInputSchema>>({
     resolver: zodResolver(newTaskInputSchema),
     defaultValues: {
@@ -45,9 +47,9 @@ const NewTaskForm = ({ addTask, statusId, className, ...props }: NewTaskFormProp
   });
 
   function onSubmit(newTaskInput: NewTaskInput) {
-    addTask({...newTaskInput, statusId} as NewTask);
+    addTask({ ...newTaskInput, statusId } as NewTask);
   }
-  
+
   return (
     <div className={cn("grid gap-8", className)} {...props}>
       <Form {...form}>
@@ -104,10 +106,7 @@ const NewTaskForm = ({ addTask, statusId, className, ...props }: NewTaskFormProp
                           <SelectGroup>
                             <SelectLabel>Priorities</SelectLabel>
                             {priorities.map((priority) => (
-                              <SelectItem
-                                key={priority.value}
-                                value={priority.value}
-                              >
+                              <SelectItem key={priority.id} value={priority.id}>
                                 <div className="flex gap-2 items-center">
                                   <priority.icon />
                                   {priority.label}

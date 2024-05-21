@@ -1,32 +1,35 @@
-import { labels } from "@/data/initialTasks.ts";
-import { taskSchema } from "@/types";
+import {
+  Dialog,
+  DialogContent, DialogDescription, DialogHeader,
+  DialogTrigger
+} from '@/components/ui/dialog.tsx'
+import UpdateTaskForm
+  from '@/pages/task-management/components/update-task-form.tsx'
+import { Task, taskSchema } from '@/types'
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { Row } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button.tsx";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
+import type { Row } from '@tanstack/react-table'
+import { Delete, Pencil } from 'lucide-react'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
+  deleteTask: (id: string) => void;
+  updateTask: (updatedTask: Task) => void;
 }
 
-export function DataTableRowActions<TData>({
-  row,
-}: DataTableRowActionsProps<TData>) {
-  const task = taskSchema.parse(row.original);
 
+export function DataTableRowActions<TData>({row, updateTask, deleteTask }: DataTableRowActionsProps<TData>) {
+  const task = taskSchema.parse(row.original)
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -38,27 +41,36 @@ export function DataTableRowActions<TData>({
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={task.label}>
-              {labels.map((label) => (
-                <DropdownMenuRadioItem key={label.value} value={label.value}>
-                  {label.label}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          Delete
-          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
+      <Dialog>
+        <DropdownMenuContent align="end" className="w-[160px] ">
+          <DialogTrigger asChild>
+            <DropdownMenuItem>
+              <Pencil size={20} className="pr-1" />
+              Edit
+            </DropdownMenuItem>
+          </DialogTrigger>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => deleteTask(task.id)}
+            className="group"
+          >
+            <div className="group-hover:text-red-500/70 flex flex-row">
+              <Delete size={20} className="pr-1" />
+              Delete
+            </div>
+            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+        <DialogContent>
+          <DialogHeader className="text-3xl tracking-wide font-semibold">
+            Update your task
+          </DialogHeader>
+          <DialogDescription>
+            Provide another info about your task and save!
+          </DialogDescription>
+          <UpdateTaskForm updateTask={updateTask} task={task} />
+        </DialogContent>
+      </Dialog>
     </DropdownMenu>
   );
 }
