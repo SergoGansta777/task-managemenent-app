@@ -26,13 +26,9 @@ export function DataTablePagination<TData>({
                                              table, deleteTask
                                            }: DataTablePaginationProps<TData>) {
   return (
-    <div className='flex items-center justify-between overflow-auto px-2'>
+    <div className='flex items-center justify-between overflow-auto'>
       <div
         className='flex flex-row gap-1 md:gap-2 lg:gap-3 items-center justify-between'>
-        <div className='hidden flex-1 text-sm text-muted-foreground sm:block'>
-          {table.getFilteredSelectedRowModel().rows.length} of{' '}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
         <AlertDialogForAction
           title={'Are you absolutely sure?'}
           description={
@@ -48,9 +44,13 @@ export function DataTablePagination<TData>({
           }
         >
           <Button variant='destructive' className='opacity-95 px-2 lg:px-3'>
-            Delete selecting
+            Delete
           </Button>
         </AlertDialogForAction>
+        <div className='hidden flex-1 text-sm text-muted-foreground sm:block'>
+          {table.getFilteredSelectedRowModel().rows.length} of{' '}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
       </div>
       <div className='flex items-center sm:space-x-6 lg:space-x-8'>
         <div className='flex items-center space-x-2'>
@@ -65,7 +65,7 @@ export function DataTablePagination<TData>({
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side='top'>
-              {[10, 20, 30, 40, 50].map((pageSize) => (
+              {[5, 10, 20, 30, 40, 50].map((pageSize) => (
                 <SelectItem key={pageSize} value={`${pageSize}`}>
                   {pageSize}
                 </SelectItem>

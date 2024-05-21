@@ -3,6 +3,7 @@ import {
   DialogContent, DialogDescription, DialogHeader,
   DialogTrigger
 } from '@/components/ui/dialog.tsx'
+import { statuses } from '@/constants'
 import UpdateTaskForm
   from '@/pages/task-management/components/update-task-form.tsx'
 import { Task, taskSchema } from '@/types'
@@ -13,12 +14,17 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu.tsx";
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu.tsx'
 import type { Row } from '@tanstack/react-table'
-import { Delete, Pencil } from 'lucide-react'
+import { ArrowRightLeftIcon, Delete, Pencil } from 'lucide-react'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -49,6 +55,28 @@ export function DataTableRowActions<TData>({row, updateTask, deleteTask }: DataT
               Edit
             </DropdownMenuItem>
           </DialogTrigger>
+          <DropdownMenuSeparator />
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <ArrowRightLeftIcon size={20} className="pr-1"/>
+              Change status
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuRadioGroup value={task.label}>
+                {statuses.map((status) => (
+                  <DropdownMenuRadioItem key={status.label} value={status.id.toString()} onClick={() => {
+                    task.statusId = status.id
+                    updateTask(task)
+                  }}>
+                    <div className="flex flex-row gap-0.5">
+                      <status.icon/>
+                      {status.label}
+                    </div>
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => deleteTask(task.id)}
