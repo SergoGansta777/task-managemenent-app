@@ -1,25 +1,23 @@
-import { useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useMemo } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export function usePathname() {
-  const { pathname } = useLocation();
-
-  return useMemo(() => pathname, [pathname]);
+  const { pathname } = useLocation()
+  
+  return useMemo(() => pathname, [pathname])
 }
 
 export function useRouter() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const router = useMemo(
+  return useMemo(
     () => ({
       back: () => navigate(-1),
       forward: () => navigate(1),
       reload: () => window.location.reload(),
       push: (href: string) => navigate(href),
-      replace: (href: string) => navigate(href, { replace: true }),
+      replace: (href: string) => navigate(href, { replace: true })
     }),
-    [navigate],
-  );
-
-  return router;
+    [navigate]
+  )
 }

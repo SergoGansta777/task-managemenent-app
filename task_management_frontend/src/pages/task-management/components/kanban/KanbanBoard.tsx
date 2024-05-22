@@ -2,7 +2,7 @@ import { statuses } from '@/constants'
 import {
   TaskCard
 } from '@/pages/task-management/components/kanban/TaskCard.tsx'
-import { type Column, Task, NewTask } from '@/types'
+import { type Column, NewTask, Task } from '@/types'
 import { hasDraggableData } from '@/utils'
 import {
   DndContext,

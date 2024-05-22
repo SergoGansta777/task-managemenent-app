@@ -1,8 +1,8 @@
-import type { TaskDragData } from '@/types'
-import { Active, DataRef, Over } from '@dnd-kit/core'
 import {
   ColumnDragData
 } from '@/pages/task-management/components/kanban/BoardColumn.tsx'
+import type { TaskDragData } from '@/types'
+import { Active, DataRef, Over } from '@dnd-kit/core'
 
 type DraggableData = ColumnDragData | TaskDragData;
 

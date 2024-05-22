@@ -1,12 +1,4 @@
 import { AlertDialogForAction } from '@/components/alert-dialog.tsx'
-import { taskSchema } from '@/types'
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon
-} from '@radix-ui/react-icons'
-import { Table } from '@tanstack/react-table'
 
 import { Button } from '@/components/ui/button.tsx'
 import {
@@ -16,6 +8,14 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select.tsx'
+import { taskSchema } from '@/types'
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  DoubleArrowLeftIcon,
+  DoubleArrowRightIcon
+} from '@radix-ui/react-icons'
+import { Table } from '@tanstack/react-table'
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;

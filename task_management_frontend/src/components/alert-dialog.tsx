@@ -18,7 +18,12 @@ interface AlertDialogForActionProps {
   action: () => void;
 }
 
-export function AlertDialogForAction({ children, title, description, action }: AlertDialogForActionProps) {
+export function AlertDialogForAction({
+                                       children,
+                                       title,
+                                       description,
+                                       action
+                                     }: AlertDialogForActionProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

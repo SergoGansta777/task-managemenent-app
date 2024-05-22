@@ -1,44 +1,44 @@
-import { createBrowserRouter } from "react-router-dom";
-import GeneralError from "../pages/errors/general-error";
-import NotFoundError from "../pages/errors/not-found-error";
-import MaintenanceError from "../pages/errors/maintenance-error";
-import RequireAuth from "@/components/require-auth.tsx";
-import TaskManagement from "../pages/task-management";
+import RequireAuth from '@/components/require-auth.tsx'
+import { createBrowserRouter } from 'react-router-dom'
+import GeneralError from '../pages/errors/general-error'
+import MaintenanceError from '../pages/errors/maintenance-error'
+import NotFoundError from '../pages/errors/not-found-error'
+import TaskManagement from '../pages/task-management'
 
 const router = createBrowserRouter([
   {
-    path: "/login",
+    path: '/login',
     lazy: async () => ({
-      Component: (await import("../pages/auth/login")).default,
-    }),
+      Component: (await import('../pages/auth/login')).default
+    })
   },
   {
-    path: "/signup",
+    path: '/signup',
     lazy: async () => ({
-      Component: (await import("../pages/auth/signup")).default,
-    }),
+      Component: (await import('../pages/auth/signup')).default
+    })
   },
   {
-    path: "/forgot-password",
+    path: '/forgot-password',
     lazy: async () => ({
-      Component: (await import("../pages/auth/forgot-password")).default,
-    }),
+      Component: (await import('../pages/auth/forgot-password')).default
+    })
   },
   {
-    path: "/",
+    path: '/',
     element: (
       <RequireAuth>
         <TaskManagement />
       </RequireAuth>
-    ),
+    )
   },
   // Error routes
-  { path: "/500", Component: GeneralError },
-  { path: "/404", Component: NotFoundError },
-  { path: "/503", Component: MaintenanceError },
-
+  { path: '/500', Component: GeneralError },
+  { path: '/404', Component: NotFoundError },
+  { path: '/503', Component: MaintenanceError },
+  
   // Fallback 404 route
-  { path: "*", Component: NotFoundError },
-]);
+  { path: '*', Component: NotFoundError }
+])
 
-export default router;
+export default router

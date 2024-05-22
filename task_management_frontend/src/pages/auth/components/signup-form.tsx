@@ -1,74 +1,76 @@
-import { HTMLAttributes } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { PasswordInput } from "@/components/ui/password-input";
-import { cn } from "@/lib/utils";
-import { SignupInput, signupScheme } from "@/types";
-import { useAuth } from "@/context/authContext";
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
-interface SignUpFormProps extends HTMLAttributes<HTMLDivElement> {}
+  FormMessage
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { PasswordInput } from '@/components/ui/password-input'
+import { useAuth } from '@/context/authContext'
+import { cn } from '@/lib/utils'
+import { SignupInput, signupScheme } from '@/types'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutation } from '@tanstack/react-query'
+import { HTMLAttributes } from 'react'
+import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { z } from 'zod'
+
+interface SignUpFormProps extends HTMLAttributes<HTMLDivElement> {
+}
 
 const formSchema = signupScheme.extend({
-  confirmPassword: z.string(),
+  confirmPassword: z.string()
 }).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match.",
-  path: ["confirmPassword"],
-});
+  message: 'Passwords don\'t match.',
+  path: ['confirmPassword']
+})
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
-
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    }
+  })
+  
   function onSubmit(data: z.infer<typeof formSchema>) {
-    mutateAsync(data);
+    mutateAsync(data)
   }
-
-  const { signup } = useAuth();
-
+  
+  const { signup } = useAuth()
+  
   const signupMutation = async (data: SignupInput) => {
-    return await signup(data);
-  };
-
+    return await signup(data)
+  }
+  
   const { mutateAsync, isPending, isError, error } = useMutation({
     mutationFn: signupMutation,
     onSuccess: () => {
-      navigate("/");
-    },
-  });
-
+      navigate('/')
+    }
+  })
+  
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+    <div className={cn('grid gap-6', className)} {...props}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid gap-2">
+          <div className='grid gap-2'>
             <FormField
               control={form.control}
-              name="username"
+              name='username'
               render={({ field }) => (
-                <FormItem className="space-y-1">
+                <FormItem className='space-y-1'>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="sergey2024" {...field} />
+                    <Input placeholder='sergey2024' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -76,12 +78,12 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
             />
             <FormField
               control={form.control}
-              name="email"
+              name='email'
               render={({ field }) => (
-                <FormItem className="space-y-1">
+                <FormItem className='space-y-1'>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="name@example.com" {...field} />
+                    <Input placeholder='name@example.com' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -89,12 +91,12 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
             />
             <FormField
               control={form.control}
-              name="password"
+              name='password'
               render={({ field }) => (
-                <FormItem className="space-y-1">
+                <FormItem className='space-y-1'>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <PasswordInput placeholder="********" {...field} />
+                    <PasswordInput placeholder='********' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -102,18 +104,18 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
             />
             <FormField
               control={form.control}
-              name="confirmPassword"
+              name='confirmPassword'
               render={({ field }) => (
-                <FormItem className="space-y-1">
+                <FormItem className='space-y-1'>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <PasswordInput placeholder="********" {...field} />
+                    <PasswordInput placeholder='********' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button className="mt-2" type="submit" disabled={isPending}>
+            <Button className='mt-2' type='submit' disabled={isPending}>
               Create Account
             </Button>
             {isError && <FormMessage>{error.message}</FormMessage>}
@@ -121,5 +123,5 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
         </form>
       </Form>
     </div>
-  );
+  )
 }

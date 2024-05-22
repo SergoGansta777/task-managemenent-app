@@ -1,11 +1,10 @@
-import type { Task } from '@/types'
-import { ColumnDef } from '@tanstack/react-table'
-
 import { Badge } from '@/components/ui/badge.tsx'
 import { Checkbox } from '@/components/ui/checkbox.tsx'
+import { priorities, statuses } from '@/constants/index.ts'
+import type { Task } from '@/types'
+import { ColumnDef } from '@tanstack/react-table'
 import { DataTableColumnHeader } from './data-table-column-header.tsx'
 import { DataTableRowActions } from './data-table-row-actions.tsx'
-import { priorities, statuses } from '@/constants/index.ts'
 
 interface TableColumnsProps {
   deleteTask: (id: string) => void;
