@@ -1,21 +1,22 @@
-# Use an official Bun image
-FROM oven/bun:1
+# Stage 1: Build
+FROM oven/bun:1 AS build
 
-# Set the working directory
 WORKDIR /app
 
-# Copy package.json and bun.lockb
 COPY package.json .
 COPY bun.lockb .
 
-# Install dependencies
 RUN bun install
 
-# Copy the rest of the application code
 COPY . .
 
-# Expose the port
+# Stage 2: Final
+FROM oven/bun:1
+
+WORKDIR /app
+
+COPY --from=build /app .
+
 EXPOSE 5173
 
-# Start the application
 CMD ["bun", "run", "dev", "--host"]
