@@ -1,7 +1,7 @@
 INSERT INTO status(name)
 VALUES
 ('Todo'),
-('In progres'),
+('In progress'),
 ('Done'),
 ('Canceled'),
 ('Backlog'),

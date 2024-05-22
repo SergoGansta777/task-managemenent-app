@@ -14,10 +14,10 @@ pub enum Error {
     #[error("Request path not found")]
     NotFound,
 
-    #[error("An error occured with the database")]
+    #[error("An error occurred with the database")]
     Sqlx(#[from] sqlx::Error),
 
-    #[error("An internal server error occured")]
+    #[error("An internal server error occurred")]
     Anyhow(#[from] anyhow::Error),
 }
 
