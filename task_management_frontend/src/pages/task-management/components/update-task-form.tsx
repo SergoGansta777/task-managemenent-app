@@ -71,6 +71,7 @@ const UpdateTaskForm = ({
                 </FormItem>
               )}
             />
+            
             <FormField
               control={form.control}
               name='label'
@@ -107,7 +108,7 @@ const UpdateTaskForm = ({
                             <SelectLabel>Priorities</SelectLabel>
                             {priorities.map((priority) => (
                               <SelectItem key={priority.id} value={priority.id}>
-                                <div className='flex gap-2 items-center'>
+                                <div className='flex gap-2 items-center fle'>
                                   <priority.icon />
                                   {priority.label}
                                 </div>

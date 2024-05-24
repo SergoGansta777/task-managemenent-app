@@ -42,6 +42,7 @@ pub async fn serve(config: Config, db: PgPool) -> anyhow::Result<()> {
 
     let addr = SocketAddr::from((Ipv4Addr::UNSPECIFIED, 8080));
     let listener = TcpListener::bind(addr).await?;
+    println!("Running");
     axum::serve(listener, app)
         .await
         .context("error running HTTP server")
@@ -53,6 +54,7 @@ fn api_router(api_context: ApiContext) -> Router {
     Router::new()
         .merge(users::router())
         .merge(tasks::router())
+        .route("/health", axum::routing::get(|| async { "ok" }))
         .layer((
             SetSensitiveHeadersLayer::new([AUTHORIZATION]),
             CompressionLayer::new(),

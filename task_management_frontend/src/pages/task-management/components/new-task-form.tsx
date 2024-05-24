@@ -87,7 +87,7 @@ const NewTaskForm = ({
                 </FormItem>
               )}
             />
-            <div className='flex flex-row justify-between items-end'>
+            <div className='flex flex-row justify-between items-end '>
               <FormField
                 control={form.control}
                 name='priority'

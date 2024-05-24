@@ -37,15 +37,28 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
     return await login(data)
   }
   
-  const { mutateAsync, isPending, isError, error } = useMutation({
+  const { mutate, isPending, isError, error } = useMutation({
     mutationFn: loginMutation,
     onSuccess: () => {
       navigate('/')
+    },
+    onError: () => {
+      console.log(error)
     }
   })
   
   function onSubmit(data: LoginInput) {
-    mutateAsync(data)
+    mutate(data)
+  }
+  
+  const getErrorMessage = (err: Error) => {
+    if (err.message.includes('401')) {
+      return 'Incorrect email or password. Please try again.'
+    }
+    if (err.message.includes('404')) {
+      return 'User does not exist.'
+    }
+    return 'An unexpected error occurred. Please try again.'
   }
   
   return (
@@ -92,7 +105,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
             <Button className='mt-2' type='submit' disabled={isPending}>
               Login
             </Button>
-            {isError && <FormMessage>{error.message}</FormMessage>}
+            {isError && <FormMessage>{getErrorMessage(error)}</FormMessage>}
           </div>
         </form>
       </Form>

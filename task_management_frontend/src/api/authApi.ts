@@ -16,6 +16,7 @@ export const LoginUser = async (loginInput: LoginInput) => {
       user: loginInput
     } as UserRequest<LoginInput>
   )
+  
   return response.data
 }
 

@@ -8,6 +8,9 @@ pub enum Error {
     #[error("Authentication required")]
     Unauthorized,
 
+    #[error("User with these credentials not found")]
+    UserNotFound,
+
     #[error("User may not perform that action")]
     Forbidden,
 
@@ -24,7 +27,7 @@ pub enum Error {
 impl Error {
     fn status_code(&self) -> StatusCode {
         match self {
-            Self::Unauthorized => StatusCode::UNAUTHORIZED,
+            Self::Unauthorized | Self::UserNotFound => StatusCode::UNAUTHORIZED,
             Self::Forbidden => StatusCode::FORBIDDEN,
             Self::NotFound => StatusCode::NOT_FOUND,
             Self::Sqlx(_) | Self::Anyhow(_) => StatusCode::INTERNAL_SERVER_ERROR,

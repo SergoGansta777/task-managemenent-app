@@ -77,16 +77,20 @@ async fn login_user(
     ctx: State<ApiContext>,
     Json(req): Json<UserBody<LoginUser>>,
 ) -> Result<Json<UserBody<User>>> {
-    let user = sqlx::query!(
+    let optional_user = sqlx::query!(
         r#"
-            select id, email, username, password_hash 
+            select id, email, username, password_hash
             from "user" where email = $1
         "#,
         req.user.email,
     )
     .fetch_optional(&ctx.db)
     .await?;
-    let user = user.unwrap();
+
+    let user = match optional_user {
+        Some(user) => user,
+        None => return Err(Error::UserNotFound.into()),
+    };
 
     verify_password(req.user.password, user.password_hash).await?;
 
@@ -103,20 +107,23 @@ async fn get_current_user(
     auth_user: AuthUser,
     ctx: State<ApiContext>,
 ) -> Result<Json<UserBody<User>>> {
-    let user = sqlx::query!(
+    let optional_user = sqlx::query!(
         r#"select email, username from "user" where id = $1"#,
         auth_user.user_id
     )
-    .fetch_one(&ctx.db)
+    .fetch_optional(&ctx.db)
     .await?;
 
-    Ok(Json(UserBody {
-        user: User {
-            email: user.email,
-            token: auth_user.to_jwt(&ctx),
-            username: user.username,
-        },
-    }))
+    match optional_user {
+        Some(user) => Ok(Json(UserBody {
+            user: User {
+                email: user.email,
+                token: auth_user.to_jwt(&ctx),
+                username: user.username,
+            },
+        })),
+        None => Err(Error::Unauthorized.into()),
+    }
 }
 
 async fn update_user(
