@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu.tsx";
 import { statuses } from "@/constants";
 import UpdateTaskForm from "@/pages/task-management/components/update-task-form.tsx";
-import { Task, taskSchema } from "@/types";
+import { type Task, taskSchema } from "@/types";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import type { Row } from "@tanstack/react-table";
 import { ArrowRightLeftIcon, Delete, Pencil } from "lucide-react";

@@ -4,8 +4,8 @@ use sqlx::postgres::PgPoolOptions;
 
 use config::Config;
 
+mod api;
 mod config;
-mod http;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -23,7 +23,7 @@ async fn main() -> anyhow::Result<()> {
 
     sqlx::migrate!().run(&db).await?;
 
-    http::serve(config, db).await?;
+    api::serve(config, db).await?;
 
     Ok(())
 }

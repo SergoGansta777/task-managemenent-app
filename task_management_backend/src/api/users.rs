@@ -6,9 +6,9 @@ use axum::routing::{get, post};
 use axum::{Json, Router};
 use serde::{Deserialize, Serialize};
 
-use crate::http::error::Error;
-use crate::http::extractor::AuthUser;
-use crate::http::{ApiContext, Result};
+use crate::api::error::Error;
+use crate::api::extractor::AuthUser;
+use crate::api::{ApiContext, Result};
 
 pub(crate) fn router() -> Router<ApiContext> {
     Router::new()

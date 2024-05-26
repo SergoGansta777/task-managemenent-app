@@ -1,4 +1,4 @@
-use crate::http::{error::Error, ApiContext};
+use crate::api::{error::Error, ApiContext};
 use axum::{
     async_trait,
     extract::{FromRef, FromRequestParts},

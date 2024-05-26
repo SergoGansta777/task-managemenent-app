@@ -1,5 +1,5 @@
-use crate::http::extractor::AuthUser;
-use crate::http::{ApiContext, Error, Result};
+use crate::api::extractor::AuthUser;
+use crate::api::{ApiContext, Error, Result};
 use axum::extract::{Path, State};
 use axum::routing::{get, post, put};
 use axum::{Json, Router};
