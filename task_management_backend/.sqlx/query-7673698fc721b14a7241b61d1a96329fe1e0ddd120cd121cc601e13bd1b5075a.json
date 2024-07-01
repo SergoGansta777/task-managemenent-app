@@ -1,0 +1,29 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        with deleted_task as (\n            delete from task\n            where user_id = $1 and id = $2\n            returning 1\n        )\n        select\n            exists(select 1 from task where id = $2) \"existed!\",\n            exists(select 1 from task) \"deleted!\"\n    ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "existed!",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 1,
+        "name": "deleted!",
+        "type_info": "Bool"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      null,
+      null
+    ]
+  },
+  "hash": "7673698fc721b14a7241b61d1a96329fe1e0ddd120cd121cc601e13bd1b5075a"
+}

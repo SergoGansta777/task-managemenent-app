@@ -1,0 +1,50 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        update task\n        set title = $1,\n            priority = $2,\n            label = $3,\n            status_id = $4\n        where id = $5\n        returning id, title, priority, label, status_id\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "title",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 2,
+        "name": "priority",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "label",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 4,
+        "name": "status_id",
+        "type_info": "Int4"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Varchar",
+        "Varchar",
+        "Varchar",
+        "Int4",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      true,
+      true,
+      false
+    ]
+  },
+  "hash": "198ba69b8a3cbdf3faa75bb1e058c1b14468b1f998ba56cd3d955960b5444b99"
+}
