@@ -11,7 +11,7 @@ services:
     depends_on:
       - backend
     healthcheck:
-      test: [ "CMD-SHELL", "curl -f http://localhost:5173 || exit 1" ]
+      test: [ "CMD-SHELL", "curl -f http://localhost:5173/ || exit 1" ]
       interval: 30s
       timeout: 10s
       retries: 3

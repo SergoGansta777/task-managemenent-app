@@ -3,6 +3,8 @@ FROM lukemathwalker/cargo-chef:latest-rust-1 AS chef
 WORKDIR /app
 RUN apt update && apt install lld clang -y
 
+ENV SQLX_OFFLINE true
+
 FROM chef AS planner
 COPY . .
 RUN cargo chef prepare --recipe-path recipe.json

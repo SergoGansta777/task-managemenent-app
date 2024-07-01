@@ -13,8 +13,8 @@ import {
   CaretSortIcon,
   EyeNoneIcon
 } from '@radix-ui/react-icons'
-import { Column } from '@tanstack/react-table'
-import React from 'react'
+import type { Column } from '@tanstack/react-table'
+import type React from 'react'
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {

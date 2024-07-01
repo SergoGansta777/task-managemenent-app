@@ -15,7 +15,7 @@ import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon
 } from '@radix-ui/react-icons'
-import { Table } from '@tanstack/react-table'
+import type { Table } from '@tanstack/react-table'
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -23,7 +23,8 @@ interface DataTablePaginationProps<TData> {
 }
 
 export function DataTablePagination<TData>({
-                                             table, deleteTask
+                                             table,
+                                             deleteTask
                                            }: DataTablePaginationProps<TData>) {
   return (
     <div className='flex items-center justify-between overflow-auto'>
@@ -40,8 +41,7 @@ export function DataTablePagination<TData>({
               deleteTask(task.id)
             })
             table.resetRowSelection()
-          }
-          }
+          }}
         >
           <Button variant='destructive' className='opacity-95 px-2 lg:px-3'>
             Delete

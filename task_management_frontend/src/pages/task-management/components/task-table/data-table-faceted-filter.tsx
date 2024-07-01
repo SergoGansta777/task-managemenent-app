@@ -18,8 +18,8 @@ import { Separator } from '@/components/ui/separator'
 
 import { cn } from '@/lib/utils'
 import { CheckIcon, PlusCircledIcon } from '@radix-ui/react-icons'
-import { Column } from '@tanstack/react-table'
-import * as React from 'react'
+import type { Column } from '@tanstack/react-table'
+import type * as React from 'react'
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
@@ -121,8 +121,8 @@ export function DataTableFacetedFilter<TData, TValue>({
                     {facets?.get(option.id) && (
                       <span
                         className='ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs'>
-                        {facets.get(option.id)}
-                      </span>
+												{facets.get(option.id)}
+											</span>
                     )}
                   </CommandItem>
                 )

@@ -15,7 +15,7 @@ import {
 import NewTaskForm from '@/pages/task-management/components/new-task-form.tsx'
 import type { NewTask } from '@/types'
 import { Cross2Icon } from '@radix-ui/react-icons'
-import { Table } from '@tanstack/react-table'
+import type { Table } from '@tanstack/react-table'
 import { CirclePlus } from 'lucide-react'
 
 import { DataTableFacetedFilter } from './data-table-faceted-filter.tsx'
@@ -27,7 +27,8 @@ interface DataTableToolbarProps<TData> {
 }
 
 export function DataTableToolbar<TData>({
-                                          table, addTask
+                                          table,
+                                          addTask
                                         }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
   
@@ -77,10 +78,7 @@ export function DataTableToolbar<TData>({
       <div className='flex justify-between items-center gap-2'>
         <Dialog>
           <DialogTrigger asChild>
-            <Button
-              variant='default'
-              className='h-8 px-2 lg:px-3 opacity-90'
-            >
+            <Button variant='default' className='h-8 px-2 lg:px-3 opacity-90'>
               <CirclePlus className='px-1' />
               Create task
             </Button>

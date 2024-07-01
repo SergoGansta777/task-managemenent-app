@@ -8,8 +8,8 @@ import {
 } from '@/components/ui/table.tsx'
 import type { NewTask } from '@/types'
 import {
-  ColumnDef,
-  ColumnFiltersState,
+  type ColumnDef,
+  type ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
@@ -17,9 +17,9 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  SortingState,
+  type SortingState,
   useReactTable,
-  VisibilityState
+  type VisibilityState
 } from '@tanstack/react-table'
 import * as React from 'react'
 

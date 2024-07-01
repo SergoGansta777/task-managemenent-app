@@ -25,9 +25,9 @@ export default function ForgotPassword() {
                 to reset your password.
               </CardDescription>
             </CardHeader>
-            <ForgotForm />
+            <ForgotForm className='px-6' />
             <CardFooter
-              className='mt-4 px-8 text-center text-sm text-muted-foreground'>
+              className='mt-4 px-6 text-center text-sm text-muted-foreground'>
               Don't have an account?
               <Link
                 to='/login'

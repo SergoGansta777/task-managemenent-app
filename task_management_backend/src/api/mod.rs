@@ -46,6 +46,7 @@ pub async fn serve(config: Config, db: PgPool) -> anyhow::Result<()> {
     axum::serve(listener, app)
         .await
         .context("error running HTTP server")
+    
 }
 
 pub type Result<T, E = Error> = std::result::Result<T, E>;
@@ -54,7 +55,7 @@ fn api_router(api_context: ApiContext) -> Router {
     Router::new()
         .merge(users::router())
         .merge(tasks::router())
-        .route("/health", axum::routing::get(|| async { "ok" }))
+        .route("/health", axum::routing::get(|| async { "healthy" }))
         .layer((
             SetSensitiveHeadersLayer::new([AUTHORIZATION]),
             CompressionLayer::new(),

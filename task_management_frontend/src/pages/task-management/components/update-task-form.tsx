@@ -20,11 +20,11 @@ import {
 } from '@/components/ui/select'
 import { priorities } from '@/constants'
 import { cn } from '@/lib/utils'
-import { Task, UpdateTask, updateTaskSchema } from '@/types'
+import { type Task, type UpdateTask, updateTaskSchema } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { HTMLAttributes } from 'react'
+import type { HTMLAttributes } from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import type { z } from 'zod'
 
 interface UpdateTaskFormProps extends HTMLAttributes<HTMLDivElement> {
   updateTask: (updatedTask: Task) => void;

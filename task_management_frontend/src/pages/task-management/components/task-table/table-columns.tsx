@@ -2,7 +2,7 @@ import { Badge } from '@/components/ui/badge.tsx'
 import { Checkbox } from '@/components/ui/checkbox.tsx'
 import { priorities, statuses } from '@/constants/index.ts'
 import type { Task } from '@/types'
-import { ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef } from '@tanstack/react-table'
 import { DataTableColumnHeader } from './data-table-column-header.tsx'
 import { DataTableRowActions } from './data-table-row-actions.tsx'
 
@@ -12,7 +12,6 @@ interface TableColumnsProps {
 }
 
 const TableColumns = ({ deleteTask, updateTask }: TableColumnsProps) => {
-  
   return [
     {
       id: 'select',
@@ -48,8 +47,8 @@ const TableColumns = ({ deleteTask, updateTask }: TableColumnsProps) => {
         return (
           <span
             className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('title')}
-          </span>
+						{row.getValue('title')}
+					</span>
         )
       }
     },
@@ -62,9 +61,7 @@ const TableColumns = ({ deleteTask, updateTask }: TableColumnsProps) => {
       cell: ({ row }) => {
         const label = row.original.label
         
-        return (
-          <Badge variant='outline'>{label}</Badge>
-        )
+        return <Badge variant='outline'>{label}</Badge>
       }
     },
     {
@@ -125,8 +122,13 @@ const TableColumns = ({ deleteTask, updateTask }: TableColumnsProps) => {
     },
     {
       id: 'actions',
-      cell: ({ row }) => <DataTableRowActions row={row} updateTask={updateTask}
-                                              deleteTask={deleteTask} />
+      cell: ({ row }) => (
+        <DataTableRowActions
+          row={row}
+          updateTask={updateTask}
+          deleteTask={deleteTask}
+        />
+      )
     }
   ] as ColumnDef<Task>[]
 }

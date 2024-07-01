@@ -50,7 +50,7 @@ const Index = () => {
   })
   
   return (
-    <Layout className=''>
+    <Layout>
       <LayoutBody className='relative'>
         <Tabs
           orientation='vertical'
