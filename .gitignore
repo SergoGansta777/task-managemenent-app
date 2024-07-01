@@ -225,3 +225,11 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+.DS_Store
+task_management_frontend/.DS_Store
+.idea
+task_management_backend/.idea
+task_management_backend/.DS_Store
+task_management_frontend/.idea
+task_management_frontend/src/.DS_Store
+.DS_Store
